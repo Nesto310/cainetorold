@@ -1,149 +1,56 @@
-Sistema de Gestão RCC
-Sistema de gestão de pacientes da Rede de Combate ao Câncer, desenvolvido com Flask e integração com API Oracle ORDS.
+# 🎗️ Sistema de Gestão de Pacientes - Rede de Combate ao Câncer (RCC)
 
-📋 Descrição
-Sistema web para gerenciamento de informações de pacientes, incluindo:
+![Python](https://img.shields.io/badge/Python-3.8+-blue?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3.0.0-black?logo=flask&logoColor=white)
+![Oracle](https://img.shields.io/badge/Oracle_ORDS-API_REST-red?logo=oracle&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Em_Desenvolvimento-success)
 
-Cadastro completo de pacientes
-Histórico médico e tratamentos
-Registro de serviços prestados
-Integração com banco de dados Oracle via API REST (ORDS)
-🏗️ Arquitetura do Projeto
+## 📋 Sobre o Projeto
+
+O **Sistema de Gestão RCC** é uma aplicação web dedicada a otimizar o acompanhamento e cuidado de pacientes oncológicos. Desenvolvido para centralizar informações cruciais, o sistema permite que a equipe da Rede de Combate ao Câncer gerencie desde dados cadastrais básicos até históricos complexos de tratamentos e serviços prestados de forma ágil e segura.
+
+A aplicação consome uma API RESTful provida pelo **Oracle ORDS**, garantindo que as regras de negócio do banco de dados estejam desacopladas da interface web.
+
+### ✨ Principais Funcionalidades
+
+* **Gestão de Pacientes:** Cadastro, leitura, atualização e exclusão (CRUD) de dados pessoais e de contato.
+* **Prontuário e Histórico Médico:** Registro detalhado de diagnósticos, tratamentos em andamento, medicamentos de uso contínuo e alergias.
+* **Controle de Serviços Prestados:** Histórico de todos os serviços e assistências fornecidas pela instituição a cada paciente.
+* **Integração REST:** Comunicação assíncrona e segura com o banco de dados Oracle via API.
+
+---
+
+## 🚀 Tecnologias e Stack
+
+* **Backend:** [Python 3.8+](https://www.python.org/) & [Flask 3.0.0](https://flask.palletsprojects.com/)
+* **Integração / Banco de Dados:** Oracle ORDS (Oracle REST Data Services) via biblioteca `requests`
+* **Frontend (Views):** [Jinja2](https://jinja.palletsprojects.com/) com HTML5/CSS3 puro
+* **Gerenciamento de Ambiente:** `python-dotenv` para segurança de credenciais
+
+---
+
+## 🏗️ Arquitetura do Projeto
+
+O projeto utiliza o padrão **Application Factory** (`create_app`) e **Blueprints**, o que garante alta escalabilidade, facilitando a adição de novos módulos no futuro sem quebrar o código existente.
+
+```text
 gestao-rcc/
 │
-├── app/                          # Pacote principal da aplicação
-│   ├── __init__.py              # Application Factory (create_app)
-│   ├── models/                  # Modelos de dados
+├── app/                          # Core da aplicação
+│   ├── __init__.py               # Factory de inicialização (create_app)
+│   ├── models/                   # Lógica de negócio e estrutura de dados
 │   │   ├── __init__.py
-│   │   └── pessoa.py           # Modelo Pessoa
-│   └── routes/                  # Blueprints e rotas
+│   │   └── pessoa.py             # Classe/Modelo de mapeamento de Pessoa
+│   └── routes/                   # Controladores (Blueprints)
 │       ├── __init__.py
-│       └── pessoa_routes.py    # Rotas CRUD de Pessoas
+│       └── pessoa_routes.py      # Endpoints para CRUD de pacientes e serviços
 │
-├── templates/                   # Templates Jinja2
-│   ├── base.html               # Template base
-│   ├── listar.html             # Lista de pacientes
-│   ├── novo.html               # Cadastro de paciente
-│   ├── editar.html             # Edição de paciente
-│   ├── detalhes.html           # Detalhes e serviços
-│   └── novo_servico.html       # Cadastro de serviço
+├── templates/                    # Telas renderizadas pelo Jinja2
+│   ├── base.html                 # Estrutura matriz (Header, Footer, Nav)
+│   ├── listar.html               # Datatable de pacientes cadastrados
+│   ├── novo.html                 # Formulário de entrada de paciente
+│   ├── editar.html               # Formulário de atualização
+│   ├── detalhes.html             # Visão 360º do paciente e seu prontuário
+│   └── novo_servico.html         # Formulário de registro de novos serviços
 │
-├── static/                      # Arquivos estáticos
-│   └── style.css               # Estilos CSS
-│
-├── BKP/                         # Backup da versão anterior
-│
-├── config.py                    # Configurações da aplicação
-├── run.py                       # Ponto de entrada (development)
-├── requirements.txt             # Dependências Python
-├── .env                         # Variáveis de ambiente (não versionar)
-├── .gitignore                   # Arquivos ignorados pelo Git
-└── README.md                    # Este arquivo
-
-🚀 Tecnologias Utilizadas
-Flask 3.0.0 - Framework web
-Python 3.8+ - Linguagem de programação
-Oracle ORDS - API REST para banco de dados Oracle
-Requests - Cliente HTTP para consumo de API
-Jinja2 - Engine de templates
-python-dotenv - Gerenciamento de variáveis de ambiente
-📦 Instalação
-1. Clone o repositório
-git clone <url-do-repositorio>
-cd gestao-rcc
-2. Crie um ambiente virtual
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-3. Instale as dependências
-pip install -r requirements.txt
-4. Configure as variáveis de ambiente
-Edite o arquivo .env com suas configurações:
-
-API_BASE_URL="https://seu-servidor-ords.com/ords/schema/"
-SECRET_KEY="sua-chave-secreta-aqui"
-FLASK_ENV="development"
-ITEMS_PER_PAGE=20
-▶️ Executando o Projeto
-Modo Desenvolvimento
-python run.py
-O servidor estará disponível em: http://localhost:5000
-
-Modo Produção
-Para produção, use um servidor WSGI como Gunicorn:
-
-pip install gunicorn
-gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()"
-🧪 Testando a API
-Você pode testar a conexão com a API acessando:
-
-http://localhost:5000/ping
-Deve retornar: Pong! O servidor Flask está no ar.
-
-📚 Estrutura de Rotas
-Pessoas (Pacientes)
-Método	Rota	Descrição
-GET	/	Lista todas as pessoas
-GET	/novo	Exibe formulário de cadastro
-POST	/novo	Cria nova pessoa
-GET	/editar/<id>	Exibe formulário de edição
-POST	/editar/<id>	Atualiza pessoa
-POST	/deletar/<id>	Remove pessoa
-GET	/pessoa/<id>/	Detalhes e histórico
-Serviços
-Método	Rota	Descrição
-GET	/pessoa/<id>/servicos/novo	Formulário novo serviço
-POST	/pessoa/<id>/servicos/novo	Cria novo serviço
-🗃️ Estrutura da API (Oracle ORDS)
-Tabela PESSOAS
-- seq_id (PK)
-- ds_nome
-- num_cpf
-- dt_nascimento
-- num_telefone
-- char_endereco
-- char_diagnostico
-- char_tratamento
-- char_medicamento
-- char_alergia
-- char_observacoes
-- data_obito
-Tabela SERVICOS
-- seq_id (PK)
-- ds_nome
-- char_descricao
-- dt_dataservico
-- sq_idpaciente (FK)
-🔒 Segurança
-Nunca commite o arquivo .env no Git
-Use variáveis de ambiente para dados sensíveis
-Em produção, use uma SECRET_KEY forte e única
-Configure HTTPS em produção
-🐛 Tratamento de Erros
-O sistema implementa tratamento robusto de erros:
-
-Timeout em requisições (10-15s)
-Validação de status HTTP
-Mensagens flash informativas
-Logs de debug detalhados
-📝 Padrões de Código
-O projeto segue:
-
-Application Factory Pattern - Criação modular da aplicação
-Blueprints - Organização de rotas
-PEP 8 - Estilo de código Python
-Docstrings - Documentação de funções
-🤝 Contribuindo
-Fork o projeto
-Crie uma branch para sua feature (git checkout -b feature/AmazingFeature)
-Commit suas mudanças (git commit -m 'Add some AmazingFeature')
-Push para a branch (git push origin feature/AmazingFeature)
-Abra um Pull Request
-📄 Licença
-Este projeto é privado e pertence à Rede de Combate ao Câncer.
-
-👥 Autores
-Desenvolvedor Principal - Gestão RCC Team
-📞 Suporte
-Para suporte, entre em contato através do email: suporte@rcc.org.br
-
-Rede de Combate ao Câncer © 2025
+├── static
