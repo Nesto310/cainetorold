@@ -22,10 +22,12 @@ A aplicação consome uma API RESTful provida pelo **Oracle ORDS**, garantindo q
 
 ## 🚀 Tecnologias e Stack
 
-* **Backend:** [Python 3.8+](https://www.python.org/) & [Flask 3.0.0](https://flask.palletsprojects.com/)
-* **Integração / Banco de Dados:** Oracle ORDS (Oracle REST Data Services) via biblioteca `requests`
-* **Frontend (Views):** [Jinja2](https://jinja.palletsprojects.com/) com HTML5/CSS3 puro
-* **Gerenciamento de Ambiente:** `python-dotenv` para segurança de credenciais
+As versões das dependências principais do projeto são:
+* **Flask 3.0.0** - Framework web principal.
+* **Requests 2.31.0** - Cliente HTTP para consumo da API Oracle ORDS.
+* **Werkzeug 3.0.1** - Biblioteca WSGI utilitária para o Flask.
+* **python-dotenv 1.0.0** - Gerenciamento de variáveis de ambiente.
+* **Jinja2** - Engine de renderização de templates HTML.
 
 ---
 
@@ -53,4 +55,11 @@ gestao-rcc/
 │   ├── detalhes.html             # Visão 360º do paciente e seu prontuário
 │   └── novo_servico.html         # Formulário de registro de novos serviços
 │
-├── static
+├── static/                       # Assets estáticos
+│   └── style.css                 # Folhas de estilo customizadas
+│
+├── config.py                     # Central de configurações dinâmicas
+├── run.py                        # Entrypoint para ambiente de desenvolvimento
+├── requirements.txt              # Mapeamento de dependências
+├── .env                          # Variáveis sensíveis de ambiente (NÃO VERSIONAR)
+└── .gitignore                    # Regras de exclusão do Git
